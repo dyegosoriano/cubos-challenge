@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express'
 import { z } from 'zod'
 
-import { AppError } from '@infra/shared/errors/AppError'
+import { AppError } from '@shared/errors/AppError'
 
 export default {
   notFound(_req: Request, _res: Response, _next: NextFunction) {

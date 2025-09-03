@@ -18,28 +18,30 @@ services:
     env_file:
       - .env
     depends_on:
-      - database
+      - postgres
 
-  database:
-    container_name: cubos-database
-    image: postgres:16
+  postgres: # https://hub.docker.com/r/bitnami/postgresql
+    image: bitnami/postgresql:16
+    container_name: cubos-postgres
     restart: unless-stopped
-    ports:
-      - ${DB_PORT}:5432
-    environment:
-      - POSTGRES_PASSWORD=${DB_PASSWORD}
-      - POSTGRES_USER=${DB_USERNAME}
-      - POSTGRES_DB=${DB_NAME}
     volumes:
-      - cubos-volume:/data/postgres
+      - ${PWD}/.docker/data/postgres:/bitnami/postgresql
+      - ${PWD}/.docker/backup:/backup
+    environment:
+      - POSTGRESQL_PASSWORD=${POSTGRESQL_PASSWORD}
+      - POSTGRESQL_USERNAME=${POSTGRESQL_USERNAME}
+      - POSTGRESQL_DATABASE=${POSTGRESQL_DATABASE}
     env_file:
       - .env
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+          cpus: '0.1'
+    ports:
+      - '5432:5432'
     networks:
       - cubos-network
-
-volumes:
-  cubos-volume:
-    driver: local
 
 networks:
   cubos-network:

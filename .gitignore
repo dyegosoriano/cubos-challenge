@@ -1,1 +1,9 @@
+backend/src/generated/prisma
+backend/.docker/*
+backend/dist/*
+
+!backend/.docker/backup/.gitkeep
+!backend/.docker/data/.gitkeep
+
 node_modules
+.env
