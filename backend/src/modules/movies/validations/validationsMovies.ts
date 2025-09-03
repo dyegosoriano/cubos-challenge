@@ -6,6 +6,8 @@ import { MovieLanguageEnum } from '../domains/enums/MovieLanguageEnum'
 import { MovieStatusEnum } from '../domains/enums/MovieStatusEnum'
 import { MovieGenreEnum } from '../domains/enums/MovieGenreEnum'
 
+const regex_image = /^data:image\/(jpeg|jpg|png|gif|webp);base64,/
+
 export const validationCreateMovie = z.object({
   genres: z.array(z.nativeEnum(MovieGenreEnum, errors.movie.genres_invalid)).min(1, errors.movie.genres_required),
   title: z.string(errors.movie.title_required).min(1, errors.movie.title_min).max(255, errors.movie.title_max),
@@ -13,17 +15,19 @@ export const validationCreateMovie = z.object({
   original_name: z.string(errors.movie.original_name_required).max(255, errors.movie.original_name_max),
   duration: z.number(errors.movie.duration_required).positive(errors.movie.duration_positive),
   popularity: z.number(errors.movie.popularity_required).min(0, errors.movie.popularity_min),
-  revenue: z.number().positive(errors.movie.revenue_positive).optional().nullable(),
   language: z.array(z.nativeEnum(MovieLanguageEnum, errors.movie.language_invalid)),
   votes: z.number(errors.movie.votes_required).min(0, errors.movie.votes_positive),
+  status: z.nativeEnum(MovieStatusEnum, errors.movie.status_invalid),
+  owner_id: z.string(errors.required_field).uuid(errors.id),
+
+  revenue: z.number().positive(errors.movie.revenue_positive).optional().nullable(),
   budget: z.number().positive(errors.movie.budget_positive).optional().nullable(),
   synopsis: z.string().max(1000, errors.movie.synopsis_max).optional().nullable(),
   profit: z.number(errors.movie.profit_number).optional().nullable(),
-  status: z.nativeEnum(MovieStatusEnum, errors.movie.status_invalid),
-  background: z.string().url(errors.url).optional().nullable(),
-  owner_id: z.string(errors.required_field).uuid(errors.id),
-  trailer: z.string().url(errors.url).optional().nullable(),
-  cover: z.string().url(errors.url).optional().nullable(),
+
+  background: z.string().regex(regex_image, errors.movie.background_invalid),
+  cover: z.string().regex(regex_image, errors.movie.cover_invalid),
+  trailer: z.string().url(errors.url),
 
   release: z
     .string(errors.movie.release_required)
@@ -46,9 +50,10 @@ export const validationUpdateMovie = z.object({
   synopsis: z.string().max(1000, errors.movie.synopsis_max).optional().nullable(),
   votes: z.number().min(0, errors.movie.votes_positive).optional().nullable(),
   profit: z.number(errors.movie.profit_number).optional().nullable(),
-  background: z.string().url(errors.url).optional().nullable(),
+
+  background: z.string().regex(regex_image, errors.movie.background_invalid).optional().nullable(),
+  cover: z.string().regex(regex_image, errors.movie.cover_invalid).optional().nullable(),
   trailer: z.string().url(errors.url).optional().nullable(),
-  cover: z.string().url(errors.url).optional().nullable(),
 
   release: z
     .string()

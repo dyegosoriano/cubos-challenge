@@ -61,6 +61,9 @@ export const errors = {
 
     revenue_positive: 'Revenue must be a positive number.',
     budget_positive: 'Budget must be a positive number.',
-    profit_number: 'Profit must be a valid number.'
+    profit_number: 'Profit must be a valid number.',
+
+    background_invalid: 'Background must be a valid base64 image (jpeg, jpg, png, gif, webp).',
+    cover_invalid: 'Cover must be a valid base64 image (jpeg, jpg, png, gif, webp).'
   }
 }
