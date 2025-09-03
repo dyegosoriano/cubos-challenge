@@ -14,13 +14,15 @@ datasource db {
 }
 
 model Users {
-  id            String         @id @unique
-  name          String
-  email         String         @unique
-  password      String
-  updated_at    DateTime
-  created_at    DateTime
+  id         String   @id @unique
+  name       String
+  email      String   @unique
+  password   String
+  updated_at DateTime
+  created_at DateTime
+
   refresh_token RefreshTokens?
+  Movies        Movies[]
 
   @@map("users")
 }
@@ -35,4 +37,93 @@ model RefreshTokens {
   user          Users    @relation(fields: [user_id], references: [id])
 
   @@map("refresh_tokens")
+}
+
+model Movies {
+  id String @id @unique
+
+  name          String
+  original_name String
+  title         String
+  synopsis      String?
+
+  owner_id String
+
+  background String?
+  trailer    String?
+  cover      String?
+
+  release    DateTime
+  popularity Int
+  votes      Int
+  duration   Int
+  budget     Decimal?
+  revenue    Decimal?
+  profit     Decimal?
+
+  language MovieLanguage
+  genres   MovieGenre[]
+  status   MovieStatus
+
+  updated_at DateTime
+  created_at DateTime
+
+  owner Users @relation(fields: [owner_id], references: [id])
+
+  @@map("movies")
+}
+
+enum MovieLanguage {
+  PORTUGUESE
+  NORWEGIAN
+  JAPANESE
+  ITALIAN
+  TURKISH
+  CHINESE
+  RUSSIAN
+  ENGLISH
+  SWEDISH
+  SPANISH
+  FRENCH
+  GERMAN
+  HEBREW
+  KOREAN
+  DANISH
+  POLISH
+  ARABIC
+  DUTCH
+  GREEK
+  HINDI
+}
+
+enum MovieStatus {
+  POST_PRODUCTION
+  IN_PRODUCTION
+  RELEASED
+  CANCELED
+  PLANNED
+  RUMORED
+}
+
+enum MovieGenre {
+  SCIENCE_FICTION
+  DOCUMENTARY
+  ADVENTURE
+  ANIMATION
+  THRILLER
+  BIOGRAPHY
+  WESTERN
+  MYSTERY
+  FANTASY
+  ROMANCE
+  HISTORY
+  HORROR
+  FAMILY
+  COMEDY
+  ACTION
+  CRIME
+  MUSIC
+  DRAMA
+  SPORT
+  WAR
 }

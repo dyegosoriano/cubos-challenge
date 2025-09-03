@@ -38,7 +38,7 @@ export class RefreshTokenUseCase implements IUseCase<IResponse> {
     if (tokenExpired) throw new AppError('Refresh token expired')
 
     return {
-      token: sign({ roles: user?.roles }, config_auth.auth.secret_token, {
+      token: sign({}, config_auth.auth.secret_token, {
         subject: user_id,
         expiresIn: '1h'
       })

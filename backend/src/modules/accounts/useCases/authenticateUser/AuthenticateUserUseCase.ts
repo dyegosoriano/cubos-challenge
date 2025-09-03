@@ -41,7 +41,7 @@ export class AuthenticateUserUseCase implements IUseCase<IUserResponseDTO & IAut
 
     const { refresh_token } = await this.refreshTokensRepository.create({ user_id: user.id, expires_date })
 
-    const token = sign({ roles: user.roles }, config_auth.auth.secret_token, {
+    const token = sign({}, config_auth.auth.secret_token, {
       subject: user.id,
       expiresIn: '1h'
     })
