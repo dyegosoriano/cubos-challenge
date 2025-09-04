@@ -6,4 +6,27 @@ backend/dist/*
 !backend/.docker/data/.gitkeep
 
 node_modules
+dist-ssr
+*.local
+dist
 .env
+
+# Logs
+lerna-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+npm-debug.log*
+*.log
+logs
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+*.njsproj
+.DS_Store
+*.ntvs*
+.idea
+*.suo
+*.sln
+*.sw?
