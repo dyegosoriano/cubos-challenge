@@ -25,25 +25,27 @@ export class CreateMovieUseCase {
     if (!userAlreadyExists) throw new AppError('User not exists', 404)
 
     if (!!valid_data.cover) {
-      const cover = await this.storageProvider.save({
-        filename: crypto.randomBytes(16).toString('hex'),
-        base64Data: valid_data.cover,
-        type: 'photos'
-      })
-
-      Object.assign(valid_data, { cover })
+      const filename = crypto.randomBytes(16).toString('hex')
+      await this.storageProvider.save({ base64Data: valid_data.cover, type: 'photos', filename })
+      Object.assign(valid_data, { cover: filename })
     }
 
     if (!!valid_data.background) {
-      const background = await this.storageProvider.save({
-        filename: crypto.randomBytes(16).toString('hex'),
-        base64Data: valid_data.background,
-        type: 'photos'
-      })
-
-      Object.assign(valid_data, { background })
+      const filename = crypto.randomBytes(16).toString('hex')
+      await this.storageProvider.save({ base64Data: valid_data.background, type: 'photos', filename })
+      Object.assign(valid_data, { background: filename })
     }
 
-    return await this.moviesRepository.create(valid_data)
+    const movie = await this.moviesRepository.create(valid_data)
+
+    const [background, cover] = await Promise.all([this.generateUrl('photos', movie?.background), this.generateUrl('photos', movie?.cover)])
+    Object.assign(movie, { background, cover })
+
+    return movie
+  }
+
+  private async generateUrl(type: 'photos' | 'videos', filename: string | null): Promise<string> {
+    if (!!filename) return this.storageProvider.getUrl({ type, filename })
+    return ''
   }
 }

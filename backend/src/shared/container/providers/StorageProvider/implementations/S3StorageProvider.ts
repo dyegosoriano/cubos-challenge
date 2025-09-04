@@ -54,7 +54,7 @@ export class S3StorageProvider implements IStorageProvider {
     }
   }
 
-  async getUrl(input: ISaveInput): Promise<string> {
+  async getUrl(input: { type: 'photos' | 'videos'; filename: string }): Promise<string> {
     if (!input?.filename || !input?.type) throw new AppError('You must enter the "type" and "filename" to get the media URL.')
 
     const key = `${input.type}/${input.filename}`

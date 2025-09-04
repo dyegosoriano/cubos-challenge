@@ -5,7 +5,7 @@ export type ISaveInput = {
 }
 
 export interface IStorageProvider {
-  getUrl(input: ISaveInput): Promise<string>
+  getUrl(input: { type: 'photos' | 'videos'; filename: string }): Promise<string>
   delete(input: ISaveInput): Promise<void>
   save(input: ISaveInput): Promise<string>
 }
