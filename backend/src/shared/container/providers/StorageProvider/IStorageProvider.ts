@@ -6,6 +6,6 @@ export type ISaveInput = {
 
 export interface IStorageProvider {
   getUrl(input: { type: 'photos' | 'videos'; filename: string }): Promise<string>
-  delete(input: ISaveInput): Promise<void>
+  delete(input: { type: 'photos' | 'videos'; filename: string }): Promise<void>
   save(input: ISaveInput): Promise<string>
 }

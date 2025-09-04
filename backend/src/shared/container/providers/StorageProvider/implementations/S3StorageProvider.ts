@@ -41,7 +41,7 @@ export class S3StorageProvider implements IStorageProvider {
     }
   }
 
-  async delete(input: ISaveInput): Promise<void> {
+  async delete(input: { type: 'photos' | 'videos'; filename: string }): Promise<void> {
     if (!input?.filename || !input?.type) throw new AppError('You must enter the "type" and "filename" to delete the media.')
 
     const key = `${input.type}/${input.filename}`

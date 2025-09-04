@@ -55,6 +55,8 @@ export const validationUpdateMovie = z.object({
   cover: z.string().regex(regex_image, errors.movie.cover_invalid).optional().nullable(),
   trailer: z.string().url(errors.url).optional().nullable(),
 
+  owner_id: z.string(errors.required_field).uuid(errors.id),
+
   release: z
     .string()
     .datetime(errors.movie.release_invalid)
