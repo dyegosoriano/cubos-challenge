@@ -5,10 +5,10 @@ import { CreateMovieUseCase } from './CreateMovieUseCase'
 
 export class CreateMovieController {
   async handle(request: Request, response: Response): Promise<Response> {
-    const { body } = request
+    const { body, user } = request
 
     const createMovieUseCase = container.resolve(CreateMovieUseCase)
-    const movie = await createMovieUseCase.execute(body)
+    const movie = await createMovieUseCase.execute({ ...body, owner_id: user.id })
 
     return response.status(201).json(movie)
   }
