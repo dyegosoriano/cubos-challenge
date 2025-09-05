@@ -5,6 +5,7 @@ const variant = tv({
   base: 'flex justify-center items-center min-w-12 min-h-10 font-medium rounded-sm px-4 cursor-pointer',
   defaultVariants: { color: 'primary' },
   variants: {
+    position: { right: 'ml-auto' },
     color: {
       secondary: 'bg-purple-a2 hover:bg-purple-a3 active:bg-purple-a1 disabled:bg-mauve-a3 text-purple-a12 transition-colors duration-200',
       primary: 'bg-purple-9 hover:bg-purple-1 active:bg-purple-8 disabled:bg-mauve-9 text-white transition-colors duration-200'
