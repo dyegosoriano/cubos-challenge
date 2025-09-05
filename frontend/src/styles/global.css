@@ -1,0 +1,188 @@
+@import 'tailwindcss';
+
+:root {
+  /* Purple */
+  --purple-1: #fefcfe;
+  --purple-2: #fbf7fe;
+  --purple-3: #f7edfe;
+  --purple-4: #f2e2fc;
+  --purple-5: #ead5f9;
+  --purple-6: #e0c4f4;
+  --purple-7: #d1afec;
+  --purple-8: #be93e4;
+  --purple-9: #8e4ec6;
+  --purple-10: #8347b9;
+  --purple-11: #8145b5;
+  --purple-12: #402060;
+
+  /* Purple Alpha */
+  --purple-a1: #aa00aa03;
+  --purple-a2: #8000e008;
+  --purple-a3: #8e00f112;
+  --purple-a4: #8d00e51d;
+  --purple-a5: #8000db2a;
+  --purple-a6: #7a01d03b;
+  --purple-a7: #6d00c350;
+  --purple-a8: #6600c06c;
+  --purple-a9: #5c00adb1;
+  --purple-a10: #53009eb8;
+  --purple-a11: #52009aba;
+  --purple-a12: #250049df;
+
+  /* Mauve */
+  --mauve-1: #fdfcfd;
+  --mauve-2: #faf9fb;
+  --mauve-3: #f2eff3;
+  --mauve-4: #eae7ec;
+  --mauve-5: #e3dfe6;
+  --mauve-6: #dbd8e0;
+  --mauve-7: #d0cdd7;
+  --mauve-8: #bcbac7;
+  --mauve-9: #8e8c99;
+  --mauve-10: #84828e;
+  --mauve-11: #65636d;
+  --mauve-12: #211f26;
+
+  /* Mauve Alpha */
+  --mauve-a1: #55005503;
+  --mauve-a2: #2b005506;
+  --mauve-a3: #30004010;
+  --mauve-a4: #20003618;
+  --mauve-a5: #20003820;
+  --mauve-a6: #14003527;
+  --mauve-a7: #10003332;
+  --mauve-a8: #08003145;
+  --mauve-a9: #05001d73;
+  --mauve-a10: #0500197d;
+  --mauve-a11: #0400119c;
+  --mauve-a12: #020008e0;
+}
+
+[data-theme='dark'] {
+  /* Purple Dark */
+  --purple-1: #18111b;
+  --purple-2: #1e1523;
+  --purple-3: #301c3b;
+  --purple-4: #3d224e;
+  --purple-5: #48295c;
+  --purple-6: #54346b;
+  --purple-7: #664282;
+  --purple-8: #8457aa;
+  --purple-9: #8e4ec6;
+  --purple-10: #9a5cd0;
+  --purple-11: #d19dff;
+  --purple-12: #ecd9fa;
+
+  /* Purple Dark Alpha */
+  --purple-a1: #b412f90b;
+  --purple-a2: #b744f714;
+  --purple-a3: #c150ff2d;
+  --purple-a4: #bb53fd42;
+  --purple-a5: #be5cfd51;
+  --purple-a6: #c16dfd61;
+  --purple-a7: #c378fd7a;
+  --purple-a8: #c47effa4;
+  --purple-a9: #b661ffc2;
+  --purple-a10: #bc6fffcd;
+  --purple-a11: #d19dff;
+  --purple-a12: #f1ddfffa;
+
+  /* Mauve Dark */
+  --mauve-1: #121113;
+  --mauve-2: #1a191b;
+  --mauve-3: #232225;
+  --mauve-4: #2b292d;
+  --mauve-5: #323035;
+  --mauve-6: #3c393f;
+  --mauve-7: #49474e;
+  --mauve-8: #625f69;
+  --mauve-9: #6f6d78;
+  --mauve-10: #7c7a85;
+  --mauve-11: #b5b2bc;
+  --mauve-12: #eeeef0;
+
+  /* Mauve Dark Alpha */
+  --mauve-a1: #00000000;
+  --mauve-a2: #f5f4f609;
+  --mauve-a3: #ebeaf814;
+  --mauve-a4: #eee5f81d;
+  --mauve-a5: #efe6fe25;
+  --mauve-a6: #f1e6fd30;
+  --mauve-a7: #eee9ff40;
+  --mauve-a8: #eee7ff5d;
+  --mauve-a9: #eae6fd6e;
+  --mauve-a10: #ece9fd7c;
+  --mauve-a11: #f5f1ffb7;
+  --mauve-a12: #fdfdffef;
+}
+
+@theme inline {
+  /* Purple */
+  --color-purple-1: var(--purple-1);
+  --color-purple-2: var(--purple-2);
+  --color-purple-3: var(--purple-3);
+  --color-purple-4: var(--purple-4);
+  --color-purple-5: var(--purple-5);
+  --color-purple-6: var(--purple-6);
+  --color-purple-7: var(--purple-7);
+  --color-purple-8: var(--purple-8);
+  --color-purple-9: var(--purple-9);
+  --color-purple-10: var(--purple-10);
+  --color-purple-11: var(--purple-11);
+  --color-purple-12: var(--purple-12);
+
+  /* Purple Alpha */
+  --color-purple-a1: var(--purple-a1);
+  --color-purple-a2: var(--purple-a2);
+  --color-purple-a3: var(--purple-a3);
+  --color-purple-a4: var(--purple-a4);
+  --color-purple-a5: var(--purple-a5);
+  --color-purple-a6: var(--purple-a6);
+  --color-purple-a7: var(--purple-a7);
+  --color-purple-a8: var(--purple-a8);
+  --color-purple-a9: var(--purple-a9);
+  --color-purple-a10: var(--purple-a10);
+  --color-purple-a11: var(--purple-a11);
+  --color-purple-a12: var(--purple-a12);
+
+  /* Mauve */
+  --color-mauve-1: var(--mauve-1);
+  --color-mauve-2: var(--mauve-2);
+  --color-mauve-3: var(--mauve-3);
+  --color-mauve-4: var(--mauve-4);
+  --color-mauve-5: var(--mauve-5);
+  --color-mauve-6: var(--mauve-6);
+  --color-mauve-7: var(--mauve-7);
+  --color-mauve-8: var(--mauve-8);
+  --color-mauve-9: var(--mauve-9);
+  --color-mauve-10: var(--mauve-10);
+  --color-mauve-11: var(--mauve-11);
+  --color-mauve-12: var(--mauve-12);
+
+  /* Mauve Alpha */
+  --color-mauve-a1: var(--mauve-a1);
+  --color-mauve-a2: var(--mauve-a2);
+  --color-mauve-a3: var(--mauve-a3);
+  --color-mauve-a4: var(--mauve-a4);
+  --color-mauve-a5: var(--mauve-a5);
+  --color-mauve-a6: var(--mauve-a6);
+  --color-mauve-a7: var(--mauve-a7);
+  --color-mauve-a8: var(--mauve-a8);
+  --color-mauve-a9: var(--mauve-a9);
+  --color-mauve-a10: var(--mauve-a10);
+  --color-mauve-a11: var(--mauve-a11);
+  --color-mauve-a12: var(--mauve-a12);
+}
+
+body {
+  background-image: linear-gradient(to top, var(--mauve-1) 40%, transparent 200%), url('/src/assets/img/background.jpg');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  background-size: cover;
+}
+
+a {
+  text-decoration: underline;
+  color: var(--purple-9);
+}
