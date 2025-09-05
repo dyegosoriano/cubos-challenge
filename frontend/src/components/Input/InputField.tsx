@@ -7,4 +7,6 @@ const variant = tv({
 
 type IProps = React.ComponentProps<'input'> & VariantProps<typeof variant>
 
-export const InputField: React.FC<IProps> = ({ ...props }) => <input className={variant(props)} {...props} />
+export const InputField: React.FC<IProps> = ({ className, ...props }) => (
+  <input className={`${variant(props)} ${className || ''}`} {...props} />
+)

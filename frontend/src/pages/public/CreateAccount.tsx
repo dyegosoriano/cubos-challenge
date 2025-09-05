@@ -25,7 +25,7 @@ export const CreateAccount = () => {
         <Input.Field placeholder="Digite sua senha novamente" type="password" />
       </Input.Container>
 
-      <Button position="right">Cadastrar</Button>
+      <Button className="ml-auto">Cadastrar</Button>
     </Container>
   )
 }

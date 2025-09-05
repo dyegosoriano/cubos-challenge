@@ -19,7 +19,10 @@ export const Login = () => {
 
       <div className="flex justify-between">
         <Link to="create-account">Criar conta</Link>
-        <Button>Entrar</Button>
+
+        <Link to="home">
+          <Button>Entrar</Button>
+        </Link>
       </div>
     </Container>
   )
