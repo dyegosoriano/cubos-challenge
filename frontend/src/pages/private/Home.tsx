@@ -226,9 +226,7 @@ export const Home = () => {
             </Container>
           )}
 
-          {isOpenAddingModal && (
-            <MovieModal movieData={null} onSubmit={() => console.log('onSubmit')} onClose={toggleAddMovieModal} mode="create" />
-          )}
+          {isOpenAddingModal && <MovieModal onSubmit={() => console.log('onSubmit')} onClose={toggleAddMovieModal} mode="create" />}
         </div>
       )}
     </>

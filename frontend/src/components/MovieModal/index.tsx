@@ -15,7 +15,7 @@ type FormData = z.infer<typeof validationCreateMovie>
 
 type IProps = React.ComponentProps<'div'> & {
   mode: 'create' | 'edit'
-  movie: IMovie | null
+  movie?: IMovie | null
   onSubmit: () => void
   onClose: () => void
 }
@@ -34,10 +34,10 @@ export const MovieModal: React.FC<IProps> = input => {
   } = useForm<FormData>({
     resolver: zodResolver(validationCreateMovie),
     defaultValues: {
-      language: input?.movie?.language || '',
-      status: input?.movie?.status || '',
-      genres: input?.movie?.genres || '',
       original_name: input?.movie?.original_name || '',
+      language: (input?.movie?.language || '') as any,
+      status: (input?.movie?.status || '') as any,
+      genres: (input?.movie?.genres || '') as any,
       popularity: input?.movie?.popularity || 0,
       synopsis: input?.movie?.synopsis || '',
       duration: input?.movie?.duration || 0,
