@@ -1,22 +1,90 @@
 import { Link } from 'react-router-dom'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import arrowRight from '../../assets/svg/arrow-right.svg'
 import arrowLeft from '../../assets/svg/arrow-left.svg'
 
 import { CircularRating } from '../../components/CircularRating'
+import { MovieModal } from '../../components/MovieModal'
 import { Container } from '../../components/Container'
 import * as optionsMovies from '../../constantes'
+import type { IMovie } from '../../types/IMovie'
 import { Button } from '../../components/Button'
+import ApiClient from '../../services/ApiClient'
 import { Input } from '../../components/Input'
-import { MovieModal } from '../../components/MovieModal'
+import { toastify } from '../../utils/toast'
 
 export const Home = () => {
   const [isOpenAddingModal, setIsOpenAddingModal] = useState(false)
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false)
+  const [movies, setMovies] = useState<IMovie[]>([])
+  const [currentPage, setCurrentPage] = useState(1)
+  const [isLoading, setIsLoading] = useState(false)
+  const [totalPages, setTotalPages] = useState(0)
 
   const toggleAddMovieModal = () => setIsOpenAddingModal(prevState => !prevState)
   const toggleFilterModal = () => setIsFilterModalOpen(prevState => !prevState)
+
+  const fetchData = async (page: number = 1) => {
+    setIsLoading(true)
+    try {
+      const response = (await ApiClient.api.get('movies', {
+        params: { page, page_size: 10 }
+      })) as {
+        total_pages: number
+        results: IMovie[]
+        page: number
+      }
+
+      setTotalPages(response.total_pages)
+      setCurrentPage(response.page)
+      setMovies(response.results)
+    } catch (error: any) {
+      toastify(error?.response?.status?.message || 'Ocorreu um erro inesperado', 'error')
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  const handlePageChange = (page: number) => {
+    if (page >= 1 && page <= totalPages && page !== currentPage) {
+      fetchData(page)
+    }
+  }
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) handlePageChange(currentPage + 1)
+  }
+
+  const handlePreviousPage = () => {
+    if (currentPage > 1) handlePageChange(currentPage - 1)
+  }
+
+  const renderPageNumbers = () => {
+    const maxVisiblePages = 3
+    const pages = []
+
+    let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2))
+    const endPage = Math.min(totalPages, startPage + maxVisiblePages - 1)
+
+    if (endPage - startPage + 1 < maxVisiblePages) {
+      startPage = Math.max(1, endPage - maxVisiblePages + 1)
+    }
+
+    for (let i = startPage; i <= endPage; i++) {
+      pages.push(
+        <Button color={i === currentPage ? 'primary' : 'secondary'} onClick={() => handlePageChange(i)} key={i}>
+          {i}
+        </Button>
+      )
+    }
+
+    return pages
+  }
+
+  useEffect(() => {
+    fetchData()
+  }, [])
 
   return (
     <>
@@ -31,46 +99,57 @@ export const Home = () => {
           </div>
 
           <Container>
-            <div className="grid grid-cols-2 m-6 gap-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
-              {Array.from({ length: 10 }).map((_, index) => (
-                <Link to="/movie">
-                  <div
-                    className="max-w-2xs w-full bg-mauve-1 aspect-9/12 cursor-pointer rounded-md bg-cover bg-center bg-no-repeat relative"
-                    style={{ backgroundImage: `url(https://image.tmdb.org/t/p/original/b33nnKl1GSFbao4l3fZDDqsMx0F.jpg)` }}
-                    key={index}
-                  >
-                    <div className="absolute rounded-md inset-0 flex flex-col-reverse h-full w-full bg-gradient-to-t from-black to-transparent">
-                      <h2 className="text-center font-extrabold mb-6">Título principal: {index}</h2>
-                    </div>
+            {isLoading && (
+              <div className="flex justify-center items-center h-64">
+                <p>Carregando filmes...</p>
+              </div>
+            )}
 
-                    <div className="absolute rounded-md inset-0 grid grid-rows-[1fr_60px] h-full w-full bg-gradient-to-t from-black to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300">
-                      <CircularRating rating={67} size={100} />
+            {!isLoading && (
+              <div className="grid grid-cols-2 m-6 gap-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
+                {movies.map(movie => (
+                  <Link to="/movie" key={movie.id}>
+                    <div
+                      className="max-w-2xs w-full bg-mauve-1 aspect-9/12 cursor-pointer rounded-md bg-cover bg-center bg-no-repeat relative"
+                      style={{ backgroundImage: `url(https://image.tmdb.org/t/p/original/b33nnKl1GSFbao4l3fZDDqsMx0F.jpg)` }}
+                    >
+                      <div className="absolute rounded-md inset-0 flex flex-col-reverse h-full w-full bg-gradient-to-t from-black to-transparent">
+                        <h2 className="text-center font-extrabold mb-6">{movie.name}</h2>
+                      </div>
 
-                      <div className="pl-4">
-                        <h3 className="font-extrabold">Título secundário: {index}</h3>
-                        <p className="text-sm font-light">Ação/Ficção científica</p>
+                      <div className="absolute rounded-md inset-0 grid grid-rows-[1fr_60px] h-full w-full bg-gradient-to-t from-black to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300">
+                        <CircularRating rating={67} size={100} />
+
+                        <div className="pl-4">
+                          <h3 className="font-extrabold">{movie.original_name}</h3>
+                          <p className="text-sm font-light">
+                            {movie.genres
+                              ?.map(genre => optionsMovies.movieGenre[genre as keyof typeof optionsMovies.movieGenre] || genre)
+                              .join('/') || 'Sem gênero'}
+                          </p>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </Link>
-              ))}
-            </div>
+                  </Link>
+                ))}
+              </div>
+            )}
           </Container>
         </div>
 
-        <div className="flex h-10 mx-auto mt-auto gap-2">
-          <Button color="paginate">
-            <img src={arrowLeft} alt="Listar filmes anteriores" />
-          </Button>
+        {totalPages > 1 && (
+          <div className="flex h-10 mx-auto mt-auto gap-2">
+            <Button color="paginate" onClick={handlePreviousPage} disabled={currentPage === 1}>
+              <img src={arrowLeft} alt="Listar filmes anteriores" />
+            </Button>
 
-          <Button>1</Button>
-          <Button>2</Button>
-          <Button>3</Button>
+            {renderPageNumbers()}
 
-          <Button>
-            <img src={arrowRight} alt="Listar próximos filmes" />
-          </Button>
-        </div>
+            <Button color="paginate" onClick={handleNextPage} disabled={currentPage === totalPages}>
+              <img src={arrowRight} alt="Listar próximos filmes" />
+            </Button>
+          </div>
+        )}
       </div>
 
       {(isFilterModalOpen || isOpenAddingModal) && (
