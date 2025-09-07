@@ -1,34 +1,16 @@
 import React from 'react'
 
 import * as optionsMovies from '../../constantes'
+import type { IMovie } from '../../types/IMovie'
 import { Container } from '../Container'
 import { Button } from '../Button'
 import { Input } from '../Input'
 
 type IProps = React.ComponentProps<'div'> & {
   onSubmit: (data: unknown) => void
+  movieData: IMovie | null
   mode: 'create' | 'edit'
   onClose: () => void
-
-  movieData?: {
-    original_name?: string
-    background?: string
-    popularity?: number
-    synopsis?: string
-    language?: string
-    duration?: number
-    trailer?: string
-    release?: string
-    revenue?: number
-    profit?: number
-    status?: string
-    genres?: string
-    budget?: number
-    cover?: string
-    title?: string
-    votes?: number
-    name?: string
-  }
 }
 
 export const MovieModal: React.FC<IProps> = input => {

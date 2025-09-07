@@ -42,6 +42,7 @@ export const Home = () => {
     } catch (error: any) {
       toastify(error?.response?.status?.message || 'Ocorreu um erro inesperado', 'error')
     } finally {
+      setIsFilterModalOpen(false)
       setIsLoading(false)
     }
   }
@@ -108,10 +109,10 @@ export const Home = () => {
             {!isLoading && (
               <div className="grid grid-cols-2 m-6 gap-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
                 {movies.map(movie => (
-                  <Link to="/movie" key={movie.id}>
+                  <Link to={'/movie/' + movie.id} key={movie.id}>
                     <div
                       className="max-w-2xs w-full bg-mauve-1 aspect-9/12 cursor-pointer rounded-md bg-cover bg-center bg-no-repeat relative"
-                      style={{ backgroundImage: `url(https://image.tmdb.org/t/p/original/b33nnKl1GSFbao4l3fZDDqsMx0F.jpg)` }}
+                      style={{ backgroundImage: `url(${movie.cover})` }}
                     >
                       <div className="absolute rounded-md inset-0 flex flex-col-reverse h-full w-full bg-gradient-to-t from-black to-transparent">
                         <h2 className="text-center font-extrabold mb-6">{movie.name}</h2>
@@ -220,7 +221,7 @@ export const Home = () => {
                   Cancelar
                 </Button>
 
-                <Button onClick={toggleFilterModal} className="flex-1">
+                <Button onClick={() => fetchData()} className="flex-1">
                   Aplicar Filtros
                 </Button>
               </div>
