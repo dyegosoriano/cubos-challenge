@@ -23,13 +23,13 @@ export class Movie implements Movies {
 
   popularity: number
   duration: number
+  revenue: number
+  budget: number
+  profit: number
+  score: number
   votes: number
 
   release: Date
-
-  revenue: Decimal | null
-  budget: Decimal | null
-  profit: Decimal | null
 
   language: MovieLanguageEnum[]
   genres: MovieGenreEnum[]

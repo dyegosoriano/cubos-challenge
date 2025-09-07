@@ -57,11 +57,12 @@ model Movies {
   popularity Int
   votes      Int
   duration   Int
-  budget     Decimal?
-  revenue    Decimal?
-  profit     Decimal?
+  budget     Int
+  revenue    Int
+  profit     Int
+  score      Int
 
-  language MovieLanguage
+  language MovieLanguage[]
   genres   MovieGenre[]
   status   MovieStatus
 

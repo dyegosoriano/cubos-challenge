@@ -47,6 +47,10 @@ export const errors = {
     votes_positive: 'Votes must be a positive number.',
     votes_required: { message: 'Votes is required.' },
 
+    score_positive: 'Score must be a positive number.',
+    score_max: 'Score must be at most 100 characters.',
+    score_required: { message: 'Score is required.' },
+
     release_required: { message: 'Release date is required.' },
     release_invalid: 'Invalid release date.',
 
