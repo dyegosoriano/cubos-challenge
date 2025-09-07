@@ -3,6 +3,7 @@ import 'dotenv/config'
 
 import express, { Application } from 'express'
 import helmet from 'helmet'
+import cors from 'cors'
 
 import '@shared/container'
 import { expressSetupRoutes } from './utils/expressSetupRoutes'
@@ -36,6 +37,7 @@ export class AppServer {
   private middlewares() {
     this.server.disable('x-powered-by')
     this.server.use(helmet())
+    this.server.use(cors({ origin: '*' }))
 
     this.server.use(express.json())
   }
