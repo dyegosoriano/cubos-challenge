@@ -22,12 +22,11 @@ export const validationCreateMovie = z.object({
   revenue: z.number('Receita é obrigatória').positive('Receita deve ser um número positivo'),
   votes: z.number('Votos é obrigatório').min(0, 'Votos deve ser no mínimo 0'),
 
-  trailer: z.string().regex(regex_video, 'URL do trailer deve ser um link válido do YouTube')
+  trailer: z.string().regex(regex_video, 'URL do trailer deve ser um link válido do YouTube'),
 
-  // release: z
-  //   .string()
-  //   .min(1, 'Data de lançamento é obrigatória')
-  //   .refine(date => !isNaN(Date.parse(date)), 'Data de lançamento inválida')
-  //   .transform(date => new Date(date))
-  //   .or(z.date('Data de lançamento é obrigatória'))
+  release: z
+    .string()
+    .min(1, 'Data de lançamento é obrigatória')
+    .refine(date => !isNaN(Date.parse(date)), 'Data de lançamento inválida')
+    .transform(date => new Date(date))
 })
