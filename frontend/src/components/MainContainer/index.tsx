@@ -27,7 +27,7 @@ export const MainContainer: React.FC<IProps> = ({ children }) => {
         </div>
       </header>
 
-      <main className="flex items-center justify-center w-full h-full">{children}</main>
+      <main className="flex-1">{children}</main>
 
       <footer className="flex items-center h-20 justify-center border-t-mauve-5 border-t-2">
         <p className="text-mauve-11">

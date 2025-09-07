@@ -6,26 +6,28 @@ import { Input } from '../../components/Input'
 
 export const Login = () => {
   return (
-    <Container>
-      <Input.Container>
-        <Input.Label text="E-mail" />
-        <Input.Field placeholder="Digite seu email" type="email" />
-      </Input.Container>
+    <div className="flex items-center justify-center h-full">
+      <Container>
+        <Input.Container>
+          <Input.Label text="E-mail" />
+          <Input.Field placeholder="Digite seu email" type="email" />
+        </Input.Container>
 
-      <Input.Container>
-        <Input.Label text="Senha" />
-        <Input.Field placeholder="Digite sua senha" type="password" />
-      </Input.Container>
+        <Input.Container>
+          <Input.Label text="Senha" />
+          <Input.Field placeholder="Digite sua senha" type="password" />
+        </Input.Container>
 
-      <div className="flex justify-between">
-        <Link className="text-purple-9 underline" to="create-account">
-          Criar conta
-        </Link>
+        <div className="flex justify-between">
+          <Link className="text-purple-9 underline" to="create-account">
+            Criar conta
+          </Link>
 
-        <Link to="/home">
-          <Button>Entrar</Button>
-        </Link>
-      </div>
-    </Container>
+          <Link to="/home">
+            <Button>Entrar</Button>
+          </Link>
+        </div>
+      </Container>
+    </div>
   )
 }
