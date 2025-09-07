@@ -1,11 +1,13 @@
 import { InputContainer } from './InputContainer'
-import { InputSelect } from './InputSelect '
+import { InputTextArea } from './InputTextArea'
+import { InputSelect } from './InputSelect'
 import { InputError } from './InputError'
 import { InputField } from './InputField'
 import { InputLabel } from './InputLabel'
 
 export const Input = {
   Container: InputContainer,
+  TextArea: InputTextArea,
   Select: InputSelect,
   Field: InputField,
   Label: InputLabel,
