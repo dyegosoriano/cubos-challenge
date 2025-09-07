@@ -3,7 +3,7 @@ import React from 'react'
 
 const variant = tv({
   base: 'flex justify-center items-center min-w-12 min-h-10 font-medium rounded-sm px-4 cursor-pointer',
-  defaultVariants: { mode: 'normal', color: 'primary' },
+  defaultVariants: { color: 'primary' },
   variants: {
     color: {
       secondary: 'bg-purple-a2 hover:bg-purple-a3 active:bg-purple-a1 disabled:bg-mauve-a3 text-purple-a12 transition-colors duration-200',
