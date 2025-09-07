@@ -1,6 +1,5 @@
 import { v7 as uuid } from 'uuid'
 
-import { Decimal } from '@prisma/client/runtime/library'
 import { Movies } from '@prisma/client'
 
 import { MovieLanguageEnum } from '../domains/enums/MovieLanguageEnum'
@@ -31,9 +30,9 @@ export class Movie implements Movies {
 
   release: Date
 
-  language: MovieLanguageEnum[]
-  genres: MovieGenreEnum[]
+  language: MovieLanguageEnum
   status: MovieStatusEnum
+  genres: MovieGenreEnum
 
   updated_at: Date
   created_at: Date

@@ -50,9 +50,9 @@ CREATE TABLE "public"."movies" (
     "revenue" INTEGER NOT NULL,
     "profit" INTEGER NOT NULL,
     "score" INTEGER NOT NULL,
-    "language" "public"."MovieLanguage"[],
-    "genres" "public"."MovieGenre"[],
+    "language" "public"."MovieLanguage" NOT NULL,
     "status" "public"."MovieStatus" NOT NULL,
+    "genres" "public"."MovieGenre" NOT NULL,
     "updated_at" TIMESTAMP(3) NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL,
 

@@ -34,8 +34,8 @@ export class MoviesRepository implements IMoviesRepository {
     if (!!filters?.release) where.release = { lte: filters.release.beforeOrEqual, gte: filters.release.afterOrEqual }
     if (!!filters?.original_name) where.original_name = { contains: filters.original_name, mode: 'insensitive' }
     if (!!filters?.name) where.name = { contains: filters.name, mode: 'insensitive' }
-    if (!!filters?.language) where.language = { has: filters.language }
-    if (!!filters?.genres) where.genres = { hasSome: filters.genres }
+    if (!!filters?.language) where.language = filters.language
+    if (!!filters?.genres) where.genres = filters.genres
     if (!!filters?.status) where.status = filters.status
 
     const [total, results] = await prisma.$transaction([
