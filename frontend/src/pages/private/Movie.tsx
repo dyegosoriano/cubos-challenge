@@ -27,14 +27,14 @@ export const Movie = () => {
       setIsLoading(false)
     } catch (error: any) {
       toastify(error?.response?.status?.message || 'Ocorreu um erro inesperado ao carregar o filme', 'error')
-      navigate('/')
+      navigate('/movie')
     }
   }
 
   const handleDeleteMovie = async () => {
     try {
       await ApiClient.api.delete('movies/' + id)
-      navigate('/')
+      navigate('/movie')
     } catch (error: any) {
       toastify(error?.response?.status?.message || 'Ocorreu um erro inesperado ao detetar o filme', 'error')
     }

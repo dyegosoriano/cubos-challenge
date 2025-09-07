@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
@@ -19,9 +19,11 @@ export const Login = () => {
   const { handleSubmit, register, formState } = useForm<FormData>({ resolver: zodResolver(validation) })
   const { errors, isSubmitting } = formState
   const { handleSignIn } = useAuth()
+  const navigate = useNavigate()
 
   async function onSubmit(data: FormData) {
     await handleSignIn(data)
+    navigate('/movie')
   }
 
   return (

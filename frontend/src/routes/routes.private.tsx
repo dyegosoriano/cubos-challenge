@@ -7,6 +7,6 @@ import { Home } from '../pages/private/Home'
 export const PrivateRoutes: React.FC = () => (
   <Routes>
     <Route path="/movie/:id" element={<Movie />} />
-    <Route path="/" element={<Home />} />
+    <Route path="/movie" element={<Home />} />
   </Routes>
 )
