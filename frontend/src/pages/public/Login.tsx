@@ -18,9 +18,11 @@ export const Login = () => {
       </Input.Container>
 
       <div className="flex justify-between">
-        <Link to="create-account">Criar conta</Link>
+        <Link className="text-purple-9 underline" to="create-account">
+          Criar conta
+        </Link>
 
-        <Link to="home">
+        <Link to="/home">
           <Button>Entrar</Button>
         </Link>
       </div>

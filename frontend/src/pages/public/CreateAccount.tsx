@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+
 import { Container } from '../../components/Container'
 import { Button } from '../../components/Button'
 import { Input } from '../../components/Input'
@@ -25,7 +27,9 @@ export const CreateAccount = () => {
         <Input.Field placeholder="Digite sua senha novamente" type="password" />
       </Input.Container>
 
-      <Button className="ml-auto">Cadastrar</Button>
+      <Link to="/home">
+        <Button className="ml-auto">Cadastrar</Button>
+      </Link>
     </Container>
   )
 }

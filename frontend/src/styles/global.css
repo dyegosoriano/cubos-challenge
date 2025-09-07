@@ -181,8 +181,3 @@ body {
   background-position: center;
   background-size: cover;
 }
-
-a {
-  text-decoration: underline;
-  color: var(--purple-9);
-}
