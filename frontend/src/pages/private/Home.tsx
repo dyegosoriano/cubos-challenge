@@ -1,17 +1,26 @@
+import { useState } from 'react'
+
 import arrowRight from '../../assets/svg/arrow-right.svg'
 import arrowLeft from '../../assets/svg/arrow-left.svg'
 
 import { CircularRating } from '../../components/CircularRating'
 import { Container } from '../../components/Container'
+import * as optionsMovies from '../../constantes'
 import { Button } from '../../components/Button'
 import { Input } from '../../components/Input'
 
 export const Home = () => {
+  const [isFilterModalOpen, setIsFilterModalOpen] = useState(false)
+
+  const toggleFilterModal = () => setIsFilterModalOpen(prevState => !prevState)
+
   return (
     <div className="flex flex-col h-full gap-6 p-4">
       <div className="flex gap-2 h-12 ml-auto">
         <Input.Field className="w-2xl" placeholder="Pesquise por filmes" type="text" />
-        <Button color="secondary">Filtros</Button>
+        <Button color="secondary" onClick={toggleFilterModal}>
+          Filtros
+        </Button>
         <Button>Adicionar Filme</Button>
       </div>
 
@@ -55,6 +64,81 @@ export const Home = () => {
           <img src={arrowRight} alt="Listar próximos filmes" />
         </Button>
       </div>
+
+      {isFilterModalOpen && (
+        <div className="flex items-center justify-center fixed inset-0 z-50 backdrop-blur-sm">
+          <Container className="w-3xl">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-xl font-bold">Filtros</h2>
+
+              <button onClick={toggleFilterModal} className="text-mauve-11 hover:text-white transition-colors cursor-pointer">
+                ✕
+              </button>
+            </div>
+
+            <div className="space-y-6">
+              <div className="grid gap-6 grid-cols-3">
+                <Input.Container>
+                  <Input.Label text="Gênero" />
+                  <Input.Select listOptions={optionsMovies.movieGenre} />
+                </Input.Container>
+
+                <Input.Container>
+                  <Input.Label text="Idioma" />
+                  <Input.Select listOptions={optionsMovies.movieLanguage} />
+                </Input.Container>
+
+                <Input.Container>
+                  <Input.Label text="Status" />
+                  <Input.Select listOptions={optionsMovies.movieStatus} />
+                </Input.Container>
+              </div>
+
+              <div className="grid gap-2">
+                <label>Busca por período de lançamento</label>
+
+                <div className="grid gap-6 grid-cols-2">
+                  <Input.Container>
+                    <Input.Label text="Data de início" />
+                    <Input.Field type="date" />
+                  </Input.Container>
+
+                  <Input.Container>
+                    <Input.Label text="Data de término" />
+                    <Input.Field type="date" />
+                  </Input.Container>
+                </div>
+              </div>
+
+              <div className="grid gap-2">
+                <label>Busca por duração</label>
+
+                <div className="grid gap-6 grid-cols-2">
+                  <Input.Container>
+                    <Input.Label text="Duração de início" />
+                    <Input.Field placeholder="Ex: 60 minutos " type="number" />
+                  </Input.Container>
+
+                  <Input.Container>
+                    <Input.Label text="Duração de término" />
+                    <Input.Field placeholder="Ex: 60 minutos " type="number" />
+                  </Input.Container>
+                </div>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-2 w-2xs ml-auto mt-6">
+              <Button onClick={toggleFilterModal} color="secondary" className="flex-1">
+                Cancelar
+              </Button>
+
+              <Button onClick={toggleFilterModal} className="flex-1">
+                Aplicar Filtros
+              </Button>
+            </div>
+          </Container>
+        </div>
+      )}
     </div>
   )
 }
