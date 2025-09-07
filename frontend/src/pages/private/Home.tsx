@@ -7,6 +7,7 @@ import arrowLeft from '../../assets/svg/arrow-left.svg'
 import { CircularRating } from '../../components/CircularRating'
 import { MovieModal } from '../../components/MovieModal'
 import { Container } from '../../components/Container'
+import { useDebounce } from '../../hooks/useDebounce'
 import * as optionsMovies from '../../constantes'
 import type { IMovie } from '../../types/IMovie'
 import { Button } from '../../components/Button'
@@ -20,17 +21,23 @@ export const Home = () => {
   const [movies, setMovies] = useState<IMovie[]>([])
   const [currentPage, setCurrentPage] = useState(1)
   const [isLoading, setIsLoading] = useState(false)
+  const [searchTerm, setSearchTerm] = useState('')
   const [totalPages, setTotalPages] = useState(0)
+
+  const debouncedSearchTerm = useDebounce(searchTerm, 500)
 
   const toggleAddMovieModal = () => setIsOpenAddingModal(prevState => !prevState)
   const toggleFilterModal = () => setIsFilterModalOpen(prevState => !prevState)
 
-  const fetchData = async (page: number = 1) => {
+  const fetchData = async (page: number = 1, name?: string) => {
     setIsLoading(true)
     try {
-      const response = (await ApiClient.api.get('movies', {
-        params: { page, page_size: 10 }
-      })) as {
+      const params: any = { page, page_size: 10 }
+      if (name && name.trim()) {
+        params.name = name.trim()
+      }
+
+      const response = (await ApiClient.api.get('movies', { params })) as {
         total_pages: number
         results: IMovie[]
         page: number
@@ -47,9 +54,14 @@ export const Home = () => {
     }
   }
 
+  useEffect(() => {
+    setCurrentPage(1)
+    fetchData(1, debouncedSearchTerm)
+  }, [debouncedSearchTerm])
+
   const handlePageChange = (page: number) => {
     if (page >= 1 && page <= totalPages && page !== currentPage) {
-      fetchData(page)
+      fetchData(page, searchTerm)
     }
   }
 
@@ -92,7 +104,15 @@ export const Home = () => {
       <div className="flex flex-col max-w-7xl h-full mx-auto p-4">
         <div className="space-y-6">
           <div className="flex w-full h-12 gap-2">
-            <Input.Field id="name" className="w-2xl ml-auto" placeholder="Pesquise por filmes" type="text" />
+            <Input.Field
+              onChange={e => setSearchTerm(e.target.value)}
+              placeholder="Pesquise por filmes"
+              className="w-2xl ml-auto"
+              value={searchTerm}
+              type="text"
+              id="name"
+            />
+
             <Button color="secondary" onClick={toggleFilterModal}>
               Filtros
             </Button>
@@ -219,7 +239,7 @@ export const Home = () => {
                   Cancelar
                 </Button>
 
-                <Button onClick={() => fetchData()} className="flex-1">
+                <Button onClick={() => fetchData(1, searchTerm)} className="flex-1">
                   Aplicar Filtros
                 </Button>
               </div>
