@@ -16,10 +16,9 @@ const validation = z.object({
 type FormData = z.infer<typeof validation>
 
 export const Login = () => {
-  const { handleSignIn } = useAuth()
-
   const { handleSubmit, register, formState } = useForm<FormData>({ resolver: zodResolver(validation) })
   const { errors, isSubmitting } = formState
+  const { handleSignIn } = useAuth()
 
   async function onSubmit(data: FormData) {
     await handleSignIn(data)

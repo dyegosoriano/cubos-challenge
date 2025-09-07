@@ -1,4 +1,4 @@
-import axios, { type AxiosRequestConfig, Axios, AxiosError } from 'axios'
+import axios, { type InternalAxiosRequestConfig, Axios, AxiosError } from 'axios'
 import { jwtDecode } from 'jwt-decode'
 
 interface ITokens {
@@ -27,7 +27,7 @@ class ApiClient {
     )
   }
 
-  async refreshToken(request: AxiosRequestConfig) {
+  async refreshToken(request: InternalAxiosRequestConfig): Promise<InternalAxiosRequestConfig> {
     if (!tokens) {
       const storageExist = localStorage.getItem('@tokens')
       tokens = storageExist ? JSON.parse(storageExist) : null
@@ -60,6 +60,8 @@ class ApiClient {
       delete this.api.defaults.headers.common.Authorization
       window.location.href = '/'
       localStorage.clear()
+
+      return request
     }
   }
 

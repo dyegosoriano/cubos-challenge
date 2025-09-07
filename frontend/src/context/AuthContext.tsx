@@ -2,6 +2,7 @@ import React, { createContext, useState, useEffect } from 'react'
 
 import ApiClient from '../services/ApiClient'
 import type { IUser } from '../types/IUser'
+import { toastify } from '../utils/toast'
 
 type ILoginResponse = IUser & { authentication: { refresh_token: string; token: string } }
 type ILoginPayload = { password: string; email: string }
@@ -34,7 +35,8 @@ const AuthProvider = ({ children }: IAuthProviderProps) => {
       ApiClient.setTokenInHeader(authentication?.token)
       setSigned(true)
       setUser(user)
-    } catch {
+    } catch (error: any) {
+      toastify(error?.response?.status?.message || 'Ocorreu um erro ao tentar fazer login', 'error')
       handleSignOut()
     }
   }
