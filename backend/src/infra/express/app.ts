@@ -35,9 +35,11 @@ export class AppServer {
   }
 
   private middlewares() {
+    this.server.use(express.urlencoded({ limit: '1mb', extended: true }))
+    this.server.use(express.json({ limit: '1mb' }))
+    this.server.use(cors({ origin: '*' }))
     this.server.disable('x-powered-by')
     this.server.use(helmet())
-    this.server.use(cors({ origin: '*' }))
 
     this.server.use(express.json())
   }
