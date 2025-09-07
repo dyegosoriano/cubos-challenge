@@ -5,11 +5,13 @@ import cubosLogo from '../../assets/svg/logo.svg'
 import sunIcon from '../../assets/svg/sun.svg'
 
 import { useTheme } from '../../hooks/useTheme'
+import { useAuth } from '../../hooks/useAuth'
 import { Button } from '../Button'
 
 type IProps = React.ComponentProps<'div'>
 
 export const MainContainer: React.FC<IProps> = ({ children }) => {
+  const { handleSignOut } = useAuth()
   const { toggleTheme } = useTheme()
 
   return (
@@ -23,7 +25,7 @@ export const MainContainer: React.FC<IProps> = ({ children }) => {
             <img src={sunIcon} className="filter brightness-0 invert" />
           </Button>
 
-          <Button>Logout</Button>
+          <Button onClick={handleSignOut}>Logout</Button>
         </div>
       </header>
 
