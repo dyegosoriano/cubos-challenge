@@ -52,3 +52,7 @@ export const movieGenre = {
   DRAMA: 'Drama',
   WAR: 'Guerra'
 }
+
+export const movieLanguageKeys = Object.keys(movieLanguage) as [keyof typeof movieLanguage, ...Array<keyof typeof movieLanguage>]
+export const movieStatusKeys = Object.keys(movieStatus) as [keyof typeof movieStatus, ...Array<keyof typeof movieStatus>]
+export const movieGenreKeys = Object.keys(movieGenre) as [keyof typeof movieGenre, ...Array<keyof typeof movieGenre>]

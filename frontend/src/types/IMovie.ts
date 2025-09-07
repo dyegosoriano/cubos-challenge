@@ -15,6 +15,7 @@ export type IMovie = {
 
   popularity: number
   duration: number
+  score: number
   votes: number
 
   release: Date
@@ -23,9 +24,9 @@ export type IMovie = {
   budget?: number
   profit?: number
 
-  language: MovieLanguageEnum[]
-  genres: MovieGenreEnum[]
+  language: MovieLanguageEnum
   status: MovieStatusEnum
+  genres: MovieGenreEnum
 
   updated_at: Date
   created_at: Date

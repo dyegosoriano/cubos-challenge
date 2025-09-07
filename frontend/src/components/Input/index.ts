@@ -3,6 +3,7 @@ import { InputTextArea } from './InputTextArea'
 import { InputSelect } from './InputSelect'
 import { InputError } from './InputError'
 import { InputField } from './InputField'
+import { InputImage } from './InputImage'
 import { InputLabel } from './InputLabel'
 
 export const Input = {
@@ -11,5 +12,6 @@ export const Input = {
   Select: InputSelect,
   Field: InputField,
   Label: InputLabel,
-  Error: InputError
+  Error: InputError,
+  Image: InputImage
 }

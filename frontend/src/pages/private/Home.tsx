@@ -119,14 +119,12 @@ export const Home = () => {
                       </div>
 
                       <div className="absolute rounded-md inset-0 grid grid-rows-[1fr_60px] h-full w-full bg-gradient-to-t from-black to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300">
-                        <CircularRating rating={67} size={100} />
+                        <CircularRating rating={movie?.score} size={100} />
 
                         <div className="pl-4">
                           <h3 className="font-extrabold">{movie.original_name}</h3>
                           <p className="text-sm font-light">
-                            {movie.genres
-                              ?.map(genre => optionsMovies.movieGenre[genre as keyof typeof optionsMovies.movieGenre] || genre)
-                              .join('/') || 'Sem gênero'}
+                            {optionsMovies.movieGenre[movie?.genres as keyof typeof optionsMovies.movieGenre]}
                           </p>
                         </div>
                       </div>
@@ -228,7 +226,9 @@ export const Home = () => {
             </Container>
           )}
 
-          {isOpenAddingModal && <MovieModal onSubmit={() => console.log('onSubmit')} onClose={toggleAddMovieModal} mode="create" />}
+          {isOpenAddingModal && (
+            <MovieModal movieData={null} onSubmit={() => console.log('onSubmit')} onClose={toggleAddMovieModal} mode="create" />
+          )}
         </div>
       )}
     </>

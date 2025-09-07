@@ -30,6 +30,7 @@ export const Movie = () => {
       navigate('/')
     }
   }
+
   const handleDeleteMovie = async () => {
     try {
       await ApiClient.api.delete('movies/' + id)
@@ -76,11 +77,9 @@ export const Movie = () => {
                   <Container color="secondary">
                     <span>Gêneros</span>
                     <div className="flex gap-6">
-                      {movie?.genres?.map(genre => (
-                        <Container color="third">
-                          {optionsMovies.movieGenre[genre as keyof typeof optionsMovies.movieGenre] || 'Sem gênero definido'}
-                        </Container>
-                      ))}
+                      <Container color="third">
+                        {optionsMovies.movieGenre[movie?.genres as keyof typeof optionsMovies.movieGenre] || 'Sem gênero definido'}
+                      </Container>
                     </div>
                   </Container>
                 </section>
@@ -97,7 +96,7 @@ export const Movie = () => {
                       <span className="text-lg font-bold">{movie?.votes}</span>
                     </Container>
 
-                    <CircularRating rating={67} size={100} />
+                    <CircularRating rating={movie?.score || 0} size={100} />
                   </div>
 
                   <div className="grid grid-cols-2 gap-6">
@@ -125,9 +124,7 @@ export const Movie = () => {
                     <Container color="secondary">
                       <span className="text-sm uppercase font-extrabold text-mauve-11">IDIOMA</span>
                       <span className="text-lg font-bold">
-                        {movie?.language
-                          ?.map(language => optionsMovies.movieLanguage[language as keyof typeof optionsMovies.movieLanguage] || language)
-                          .join(', ') || 'Sem idioma definido'}
+                        {optionsMovies.movieLanguage[movie?.language as keyof typeof optionsMovies.movieLanguage]}
                       </span>
                     </Container>
                   </div>
@@ -177,7 +174,7 @@ export const Movie = () => {
 
       {isOpenEditingModal && (
         <div className="flex items-center justify-center fixed inset-0 z-50 backdrop-blur-sm">
-          <MovieModal onSubmit={() => console.log('onSubmit')} onClose={toggleEditMovieModal} mode="edit" movieData={movie} />
+          <MovieModal onSubmit={fetchData} onClose={toggleEditMovieModal} mode="edit" movie={movie} />
         </div>
       )}
     </>
