@@ -1,6 +1,7 @@
 import arrowRight from '../../assets/svg/arrow-right.svg'
 import arrowLeft from '../../assets/svg/arrow-left.svg'
 
+import { CircularRating } from '../../components/CircularRating'
 import { Container } from '../../components/Container'
 import { Button } from '../../components/Button'
 import { Input } from '../../components/Input'
@@ -17,7 +18,26 @@ export const Home = () => {
       <Container>
         <div className="grid grid-cols-2 m-6 gap-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
           {Array.from({ length: 10 }).map((_, index) => (
-            <div key={index} className="w-2xs bg-mauve-1 aspect-9/12 cursor-pointer rounded-md" />
+            <div
+              style={{
+                backgroundImage: `url(https://acdn-us.mitiendanube.com/stores/004/687/740/products/pos-03736-0c9fa69c6909c1026017211500446414-1024-1024.webp)`
+              }}
+              className="w-2xs bg-mauve-1 aspect-9/12 cursor-pointer rounded-md bg-cover bg-center bg-no-repeat relative"
+              key={index}
+            >
+              <div className="absolute inset-0 flex flex-col-reverse h-full w-full bg-gradient-to-t from-black to-transparent hover:opacity-0 transition-opacity duration-300">
+                <h2 className="text-center font-extrabold mb-6">Título principal: {index}</h2>
+              </div>
+
+              <div className="absolute inset-0 grid grid-rows-[1fr_60px] h-full w-full bg-gradient-to-t from-black to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300">
+                <CircularRating rating={67} size={100} />
+
+                <div className="pl-4">
+                  <h3 className="font-extrabold">Título secundário: {index}</h3>
+                  <p className="text-sm font-light">Ação/Ficção científica</p>
+                </div>
+              </div>
+            </div>
           ))}
         </div>
       </Container>
