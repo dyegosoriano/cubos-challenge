@@ -44,7 +44,7 @@ export const CreateAccount = () => {
     try {
       await ApiClient.api.post('users', data)
       await handleSignIn(data)
-      navigate('/')
+      navigate('/movie')
     } catch (error: any) {
       toastify(error?.response?.status?.message || 'Ocorreu um erro ao tentar cadastrar o usuário', 'error')
     }
