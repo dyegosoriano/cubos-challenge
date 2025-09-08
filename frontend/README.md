@@ -2,14 +2,6 @@
 
 Esta documentação descreve informações essenciais sobre o frontend do projeto.
 
-# Ferramentas usadas para desenvolvimento
-
-- Usar gerenciador de pacotes - Yarn
-- react-router-dom - <= 6
-- versão do Node - <= 16
-- Typescript - <= 4
-- React - <= 17
-
 ## Estrutura de diretórios
 
 ```
