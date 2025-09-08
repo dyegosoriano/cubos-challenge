@@ -43,7 +43,7 @@ const validation = z.object({
 type FormData = z.infer<typeof validation>
 
 export const Home = () => {
-  const { handleSubmit, register, formState } = useForm<FormData>({ resolver: zodResolver(validation) })
+  const { handleSubmit, register, formState } = useForm<FormData>({ resolver: zodResolver(validation as any) })
   const { errors } = formState
 
   const [isOpenAddingModal, setIsOpenAddingModal] = useState(false)
