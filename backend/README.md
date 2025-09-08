@@ -47,8 +47,8 @@ Certifique-se de ter as seguintes dependências instaladas em sua máquina:
 
 - Docker Compose (Utilizado para criar o ambiente de desenvolvimento)
 - Docker (Para ser utilizado no ambiente de produção)
-- Node.js (versão v18 ou superior)
-- Yarn (versão v1.22.19 ou superior)
+- Yarn (versão v1.22.22 ou superior)
+- Node.js (versão v22 ou superior)
 
 ## Configuração
 

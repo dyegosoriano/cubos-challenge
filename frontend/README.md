@@ -1,69 +1,63 @@
-# React + TypeScript + Vite
+# Documentação Product Management back-end
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Esta documentação descreve informações essenciais sobre o frontend do projeto.
 
-Currently, two official plugins are available:
+# Ferramentas usadas para desenvolvimento
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Usar gerenciador de pacotes - Yarn
+- react-router-dom - <= 6
+- versão do Node - <= 16
+- Typescript - <= 4
+- React - <= 17
 
-## Expanding the ESLint configuration
+## Estrutura de diretórios
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```
+src - ROOT
+├── assets
+├── components
+│   ├── Button - Exemplo da estrutura padrão de um componente
+│   │   └── index.tsx - Arquivo com a estrutura HTML do componente Button
+│   └── index.ts - Arquivo central para exportação de todos componentes
+├── context
+│   └── index.ts - Arquivo central para exportação de todos os contextos
+├── hooks
+│   └── index.ts - Arquivo central para exportação de todos os hooks
+├── pages
+│   └── Home.tsx - Exemplo da estrutura padrão de uma página
+├── routes
+│   ├── index.tsx - Arquivo responsável por retornar somente rotas públicas/privadas com base na autenticação do usuário
+│   ├── routes.private.tsx - Rotas privadas
+│   └── routes.public.tsx - Rotas públicas
+├── styles
+│   └── global.ts - Arquivo de estilização global
+├── utils - Arquivo central para exportação de todos scripts da pasta utils
+├── App.tsx
+└── index.tsx
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Tecnologias utilizadas
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- [Vite.js](https://vite.dev/) - Build tool rápido que oferece ambiente de desenvolvimento otimizado e empacotamento eficiente.
+- [Tailwindcss](https://tailwindcss.com/) - Framework CSS utilitário para criação de interfaces responsivas e customizáveis.
+- [axios](https://axios-http.com/) - Cliente HTTP baseado em Promises para consumo de APIs.
+- [React Hook Form](https://www.react-hook-form.com/) - Biblioteca para gerenciamento de formulários em React com suporte a validação.
+- [React Router](https://reactrouter.com/) - Biblioteca para roteamento dinâmico e navegação em aplicações React.
+- [Zod](https://github.com/colinhacks/zod) - Biblioteca para validação de esquemas.
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## Pré-Requisitos
+
+Certifique-se de ter as seguintes dependências instaladas em sua máquina:
+
+- Yarn (versão v1.22.22 ou superior)
+- Node.js (versão v22 ou superior)
+
+## Configuração
+
+1. Navegue até o diretório do projeto
+2. Instale as dependências para desenvolvimento: `yarn`
+3. Renomeie o arquivo `.env.example` para `.env` e atualize as variáveis de ambiente.
+
+## Executando o projeto em ambiente de desenvolvimento
+
+1. Na raiz do diretório execute o comando `yarn dev` que logo em seguida inicializará o ambiente de desenvolvimento.
