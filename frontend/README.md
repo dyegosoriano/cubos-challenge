@@ -1,4 +1,4 @@
-# Documentação Product Management back-end
+# Documentação Product Management front-end
 
 Esta documentação descreve informações essenciais sobre o frontend do projeto.
 
