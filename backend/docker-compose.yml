@@ -1,25 +1,6 @@
 version: '3.7'
 
 services:
-  api:
-    container_name: cubos-api
-    command: yarn dev:server
-    restart: unless-stopped
-    build: .
-    ports:
-      - ${PORT}:${PORT}
-      - 9229:9229
-    environment:
-      - DATABASE_URL=cubos-database
-    volumes:
-      - .:/usr/app
-    networks:
-      - cubos-network
-    env_file:
-      - .env
-    depends_on:
-      - postgres
-
   postgres: # https://hub.docker.com/r/bitnami/postgresql
     image: bitnami/postgresql:16
     container_name: cubos-postgres
