@@ -1,5 +1,8 @@
-import { Link } from 'react-router-dom'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { useEffect, useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { Link } from 'react-router-dom'
+import z from 'zod'
 
 import arrowRight from '../../assets/svg/arrow-right.svg'
 import arrowLeft from '../../assets/svg/arrow-left.svg'
@@ -15,7 +18,34 @@ import ApiClient from '../../services/ApiClient'
 import { Input } from '../../components/Input'
 import { toastify } from '../../utils/toast'
 
+const validation = z.object({
+  release_before: z
+    .string()
+    .transform(date => (date ? new Date(date) : null))
+    .optional(),
+
+  release_after: z
+    .string()
+    .transform(date => (date ? new Date(date) : null))
+    .optional(),
+
+  duration_before: z
+    .string()
+    .transform(number => (number ? +number : null))
+    .optional(),
+
+  duration_after: z
+    .string()
+    .transform(number => (number ? +number : null))
+    .optional()
+})
+
+type FormData = z.infer<typeof validation>
+
 export const Home = () => {
+  const { handleSubmit, register, formState } = useForm<FormData>({ resolver: zodResolver(validation) })
+  const { errors } = formState
+
   const [isOpenAddingModal, setIsOpenAddingModal] = useState(false)
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false)
   const [movies, setMovies] = useState<IMovie[]>([])
@@ -29,12 +59,14 @@ export const Home = () => {
   const toggleAddMovieModal = () => setIsOpenAddingModal(prevState => !prevState)
   const toggleFilterModal = () => setIsFilterModalOpen(prevState => !prevState)
 
-  const fetchData = async (page: number = 1, name?: string) => {
+  const fetchData = async (page: number = 1, search?: FormData) => {
     setIsLoading(true)
     try {
-      const params: any = { page, page_size: 10 }
-      if (name && name.trim()) {
-        params.name = name.trim()
+      const params = {
+        ...(!!searchTerm && { name: searchTerm.trim() }),
+        ...search,
+        page_size: 10,
+        page
       }
 
       const response = (await ApiClient.api.get('movies', { params })) as {
@@ -54,14 +86,14 @@ export const Home = () => {
     }
   }
 
-  useEffect(() => {
-    setCurrentPage(1)
-    fetchData(1, debouncedSearchTerm)
-  }, [debouncedSearchTerm])
+  async function onSubmit(data: FormData) {
+    console.log({ data })
+    await fetchData(currentPage, data)
+  }
 
   const handlePageChange = (page: number) => {
     if (page >= 1 && page <= totalPages && page !== currentPage) {
-      fetchData(page, searchTerm)
+      fetchData(page)
     }
   }
 
@@ -94,6 +126,11 @@ export const Home = () => {
 
     return pages
   }
+
+  useEffect(() => {
+    setCurrentPage(1)
+    fetchData(1)
+  }, [debouncedSearchTerm])
 
   useEffect(() => {
     fetchData()
@@ -174,76 +211,65 @@ export const Home = () => {
       {(isFilterModalOpen || isOpenAddingModal) && (
         <div className="flex items-center justify-center fixed inset-0 z-50 backdrop-blur-sm">
           {isFilterModalOpen && (
-            <Container className="w-3xl">
-              <div className="flex justify-between items-center mb-4">
-                <h2 className="text-xl font-bold">Filtros</h2>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <Container className="w-3xl">
+                <div className="flex justify-between items-center mb-4">
+                  <h2 className="text-xl font-bold">Filtros</h2>
 
-                <button onClick={toggleFilterModal} className="text-mauve-11 hover:text-white transition-colors cursor-pointer">
-                  ✕
-                </button>
-              </div>
-
-              <div className="space-y-6">
-                <div className="grid gap-6 grid-cols-3">
-                  <Input.Container>
-                    <Input.Label htmlFor="genres" text="Gênero" />
-                    <Input.Select id="genres" listOptions={optionsMovies.movieGenre} />
-                  </Input.Container>
-
-                  <Input.Container>
-                    <Input.Label htmlFor="language" text="Idioma" />
-                    <Input.Select id="language" listOptions={optionsMovies.movieLanguage} />
-                  </Input.Container>
-
-                  <Input.Container>
-                    <Input.Label htmlFor="status" text="Status" />
-                    <Input.Select id="status" listOptions={optionsMovies.movieStatus} />
-                  </Input.Container>
+                  <button onClick={toggleFilterModal} className="text-mauve-11 hover:text-white transition-colors cursor-pointer">
+                    ✕
+                  </button>
                 </div>
 
-                <div className="grid gap-2">
-                  <label>Busca por período de lançamento</label>
+                <div className="space-y-6">
+                  <div className="grid gap-2">
+                    <label>Busca por período de lançamento</label>
 
-                  <div className="grid gap-6 grid-cols-2">
-                    <Input.Container>
-                      <Input.Label htmlFor="" text="Data de início" />
-                      <Input.Field id="" type="date" />
-                    </Input.Container>
+                    <div className="grid gap-6 grid-cols-2">
+                      <Input.Container>
+                        <Input.Label htmlFor="release_after" text="Data de início" />
+                        <Input.Field {...register('release_after')} type="date" />
+                        {errors?.release_after && <Input.Error error_message={errors.release_after.message} />}
+                      </Input.Container>
 
-                    <Input.Container>
-                      <Input.Label htmlFor="" text="Data de término" />
-                      <Input.Field id="" type="date" />
-                    </Input.Container>
+                      <Input.Container>
+                        <Input.Label htmlFor="release_before" text="Data de término" />
+                        <Input.Field {...register('release_before')} type="date" />
+                        {errors?.release_before && <Input.Error error_message={errors.release_before.message} />}
+                      </Input.Container>
+                    </div>
+                  </div>
+
+                  <div className="grid gap-2">
+                    <label>Busca por duração</label>
+
+                    <div className="grid gap-6 grid-cols-2">
+                      <Input.Container>
+                        <Input.Label htmlFor="duration_after" text="Duração de início" />
+                        <Input.Field {...register('duration_after')} placeholder="Ex: 60 minutos " type="number" />
+                        {errors?.duration_after && <Input.Error error_message={errors.duration_after.message} />}
+                      </Input.Container>
+
+                      <Input.Container>
+                        <Input.Label htmlFor="duration_before" text="Duração de término" />
+                        <Input.Field {...register('duration_before')} placeholder="Ex: 60 minutos " type="number" />
+                        {errors?.duration_before && <Input.Error error_message={errors.duration_before.message} />}
+                      </Input.Container>
+                    </div>
                   </div>
                 </div>
 
-                <div className="grid gap-2">
-                  <label>Busca por duração</label>
+                <div className="grid grid-cols-2 gap-2 w-2xs ml-auto mt-6">
+                  <Button onClick={toggleFilterModal} color="secondary" className="flex-1">
+                    Cancelar
+                  </Button>
 
-                  <div className="grid gap-6 grid-cols-2">
-                    <Input.Container>
-                      <Input.Label htmlFor="" text="Duração de início" />
-                      <Input.Field id="" placeholder="Ex: 60 minutos " type="number" />
-                    </Input.Container>
-
-                    <Input.Container>
-                      <Input.Label htmlFor="" text="Duração de término" />
-                      <Input.Field id="" placeholder="Ex: 60 minutos " type="number" />
-                    </Input.Container>
-                  </div>
+                  <Button type="submit" className="flex-1">
+                    Aplicar Filtros
+                  </Button>
                 </div>
-              </div>
-
-              <div className="grid grid-cols-2 gap-2 w-2xs ml-auto mt-6">
-                <Button onClick={toggleFilterModal} color="secondary" className="flex-1">
-                  Cancelar
-                </Button>
-
-                <Button onClick={() => fetchData(1, searchTerm)} className="flex-1">
-                  Aplicar Filtros
-                </Button>
-              </div>
-            </Container>
+              </Container>
+            </form>
           )}
 
           {isOpenAddingModal && <MovieModal onSubmit={() => fetchData(1)} onClose={toggleAddMovieModal} mode="create" />}

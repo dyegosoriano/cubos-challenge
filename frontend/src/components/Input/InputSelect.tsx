@@ -9,6 +9,7 @@ type IProps = React.ComponentProps<'select'> & VariantProps<typeof variant> & { 
 
 export const InputSelect: React.FC<IProps> = ({ className, ...props }) => (
   <select className={`${variant(props)} ${className || ''}`} {...props}>
+    <option key="" value=""></option>
     {Object.entries(props.listOptions).map(([key, value]) => (
       <option key={key} value={key}>
         {value}
