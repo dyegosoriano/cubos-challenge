@@ -74,6 +74,7 @@ export const validationListMovies = z.object({
   original_name: z.string().max(255, errors.movie.original_name_max).optional().nullable(),
   status: z.nativeEnum(MovieStatusEnum, errors.movie.status_invalid).optional().nullable(),
   genres: z.nativeEnum(MovieGenreEnum, errors.movie.genres_invalid).optional().nullable(),
+  owner_id: z.string(errors.required_field).uuid(errors.id),
 
   duration_before: z
     .string()

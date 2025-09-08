@@ -48,13 +48,14 @@ export class MoviesRepository implements IMoviesRepository {
     if (!!filters?.original_name) where.original_name = { contains: filters.original_name, mode: 'insensitive' }
     if (!!filters?.name) where.name = { contains: filters.name, mode: 'insensitive' }
     if (!!filters?.language) where.language = filters.language
+    if (!!filters?.owner_id) where.owner_id = filters.owner_id
     if (!!filters?.genres) where.genres = filters.genres
     if (!!filters?.status) where.status = filters.status
 
     const [total, results] = await prisma.$transaction([
       prisma.movies.count({ where }),
       prisma.movies.findMany({
-        skip: +page === 0 || +page === 1 ? 0 : page * page_size,
+        skip: (page - 1) * page_size,
         orderBy: { created_at: 'asc' },
         take: +page_size,
         where
