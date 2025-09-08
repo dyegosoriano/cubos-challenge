@@ -63,10 +63,10 @@ export const Movie = () => {
               </div>
             </div>
 
-            <div className="flex gap-6">
-              <img className="w-2xs aspect-9/12 object-cover rounded-lg" alt={movie?.original_name} src={movie?.cover} />
+            <div className="flex flex-col lg:flex-row gap-6">
+              <img className="w-full max-w-xs lg:w-2xs aspect-9/12 object-cover rounded-lg mx-auto lg:mx-0" alt={movie?.original_name} src={movie?.cover} />
 
-              <div className="grid grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <section className="space-y-6">
                   <h2 className="italic">{movie?.title}</h2>
 
@@ -84,8 +84,8 @@ export const Movie = () => {
                   </Container>
                 </section>
 
-                <section className="grid grid-rows-4 gap-6">
-                  <div className="flex gap-6">
+                <section className="grid grid-rows-1 lg:grid-rows-4 gap-6">
+                  <div className="flex flex-col sm:flex-row lg:flex-row gap-6">
                     <Container color="secondary">
                       <span className="text-sm uppercase font-extrabold text-mauve-11">Popularidade</span>
                       <span className="text-lg font-bold">{movie?.popularity}</span>
@@ -96,10 +96,12 @@ export const Movie = () => {
                       <span className="text-lg font-bold">{movie?.votes}</span>
                     </Container>
 
-                    <CircularRating rating={movie?.score || 0} size={100} />
+                    <div className="mx-auto sm:mx-0">
+                      <CircularRating rating={movie?.score || 0} size={100} />
+                    </div>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-6">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     <Container color="secondary">
                       <span className="text-sm uppercase font-extrabold text-mauve-11">Lançamento</span>
                       <span className="text-lg font-bold">
@@ -113,7 +115,7 @@ export const Movie = () => {
                     </Container>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-6">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     <Container color="secondary">
                       <span className="text-sm uppercase font-extrabold text-mauve-11">SITUAÇÃO</span>
                       <span className="text-lg font-bold">
@@ -129,7 +131,7 @@ export const Movie = () => {
                     </Container>
                   </div>
 
-                  <div className="grid grid-cols-3 gap-6">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     <Container color="secondary">
                       <span className="text-sm uppercase font-extrabold text-mauve-11">Orçamento</span>
                       <span className="text-lg font-bold">${movie?.budget}m</span>
