@@ -74,7 +74,26 @@ export const validationListMovies = z.object({
   original_name: z.string().max(255, errors.movie.original_name_max).optional().nullable(),
   status: z.nativeEnum(MovieStatusEnum, errors.movie.status_invalid).optional().nullable(),
   genres: z.nativeEnum(MovieGenreEnum, errors.movie.genres_invalid).optional().nullable(),
-  release: z.object({ beforeOrEqual: z.date({}), afterOrEqual: z.date({}) }).optional(),
+
+  duration_before: z
+    .string()
+    .transform(number => +number)
+    .optional(),
+
+  duration_after: z
+    .string()
+    .transform(number => +number)
+    .optional(),
+
+  release_before: z
+    .string()
+    .transform(date => (date ? new Date(date) : null))
+    .optional(),
+
+  release_after: z
+    .string()
+    .transform(date => (date ? new Date(date) : null))
+    .optional(),
 
   page_size: z
     .string(errors.pagination_required)

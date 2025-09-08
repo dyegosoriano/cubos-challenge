@@ -31,7 +31,20 @@ export class MoviesRepository implements IMoviesRepository {
   async findAll({ page_size = 10, page = 1, ...filters }: IFindAllMoviesDTO): Promise<IFindAllResults<Movie>> {
     const where: Prisma.MoviesWhereInput = {}
 
-    if (!!filters?.release) where.release = { lte: filters.release.beforeOrEqual, gte: filters.release.afterOrEqual }
+    if (!!filters?.duration_before || !!filters?.duration_after) {
+      where.duration = {
+        ...(!!filters?.duration_before && { lte: filters.duration_before }),
+        ...(!!filters?.duration_after && { gte: filters.duration_after })
+      }
+    }
+
+    if (!!filters?.release_before || !!filters?.release_after) {
+      where.release = {
+        ...(!!filters?.release_before && { lte: filters.release_before }),
+        ...(!!filters?.release_after && { gte: filters.release_after })
+      }
+    }
+
     if (!!filters?.original_name) where.original_name = { contains: filters.original_name, mode: 'insensitive' }
     if (!!filters?.name) where.name = { contains: filters.name, mode: 'insensitive' }
     if (!!filters?.language) where.language = filters.language
